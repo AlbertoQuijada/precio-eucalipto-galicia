@@ -43,7 +43,12 @@ function renderSources() {
 
 function renderRecommendation() {
   const history = state.data.history.filter(item => item.species === "nitens").sort((a, b) => a.date.localeCompare(b.date));
-  const current = history.at(-1); const previous = history.at(-2);
+  if (history.length < 2) {
+    document.querySelector("#recommendation-badge").textContent = "Datos insuficientes";
+    document.querySelector("#recommendation-card").innerHTML = "<div class=\"recommendation-lead\"><strong>Aún no hay dos referencias comparables para emitir una señal.</strong><span>La recomendación aparecerá cuando se incorpore otro dato histórico.</span></div>";
+    return;
+  }
+  const current = history[history.length - 1]; const previous = history[history.length - 2];
   const currentMid = (current.low + current.high) / 2; const previousMid = (previous.low + previous.high) / 2;
   const change = ((currentMid - previousMid) / previousMid) * 100;
   const badge = document.querySelector("#recommendation-badge"); const card = document.querySelector("#recommendation-card");
