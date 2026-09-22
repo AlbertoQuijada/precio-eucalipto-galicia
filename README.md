@@ -12,6 +12,8 @@ npx serve .
 
 También funciona en cualquier alojamiento estático. En GitHub Pages basta con publicar la rama principal. El flujo `.github/workflows/update-data.yml` intenta actualizar los datos cada lunes y también permite lanzarlo manualmente.
 
+El despliegue público se realiza mediante `.github/workflows/pages.yml`.
+
 ## Datos y criterio
 
 - La fuente principal actual es Maderera Frouxeira: referencia publicada el 1 de septiembre de 2026, basada en contratos recientes de A Coruña y Lugo.
