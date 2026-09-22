@@ -22,7 +22,7 @@
         <p class="eyebrow">Galicia · referencia de mercado</p>
         <h1>Precio del eucalipto<br /><em>en pie</em></h1>
         <p class="intro">Referencia pública del precio que recibe el propietario por el árbol sin talar en Galicia.</p>
-        <div class="status-line"><span class="status-dot"></span><span id="updated-label">Cargando datos…</span><span class="status-separator">·</span><span>€/tonelada · con corteza · sin IVA</span></div>
+        <div class="status-line"><span class="status-dot"></span><span id="updated-label">Cargando datos…</span><span class="status-separator">·</span><span id="freshness-label"></span><span class="status-separator">·</span><span>€/tonelada · con corteza · sin IVA</span></div>
       </section>
 
       <div class="focus-line"><span class="focus-badge">Más de 35 cm</span><span>Diámetro de referencia en todas las cifras mostradas</span><span class="focus-note">La horquilla refleja diferencias de acceso, pendiente, volumen y condiciones de la parcela.</span></div>
@@ -41,6 +41,7 @@
 
       <section class="history-section">
         <div class="section-heading"><div><p class="eyebrow">Evolución disponible</p><h2>La tendencia con contexto</h2></div><span class="legend"><i class="legend-dot nitens-dot"></i>nitens <i class="legend-dot globulus-dot"></i>globulus</span></div>
+        <div class="history-controls"><label for="history-range">Mostrar histórico</label><select id="history-range"><option value="3">Últimos 3 meses</option><option value="6">Últimos 6 meses</option><option value="12">Últimos 12 meses</option><option value="24">Últimos 24 meses</option><option value="all" selected>Todas las lecturas</option></select><span id="update-check">Última comprobación: —</span></div>
         <div class="chart-card">
           <div class="chart-meta"><span>€/t</span><span id="chart-description">Datos comparables disponibles</span></div>
           <div class="chart-wrap"><svg id="history-chart" viewBox="0 0 760 250" role="img" aria-label="Gráfico histórico del precio del eucalipto"></svg></div>
@@ -61,6 +62,6 @@
     </main>
 
     <footer><div class="wrap footer-inner"><span>Monte claro · Precio del eucalipto en Galicia</span><span id="data-version"></span></div></footer>
-    <script src="app.js?v=20260922-2" type="module"></script>
+    <script src="app.js" type="module"></script>
   </body>
 </html>

@@ -4,6 +4,8 @@
   "unit": "€/t",
   "condition": "en pie",
   "lastUpdated": "2026-09-01",
+  "lastChecked": "2026-09-22",
+  "updateStatus": "success",
   "primarySourceId": "frouxeira-2026-09",
   "prices": {
     "globulus": { "large": {"low": 32, "high": 37} },

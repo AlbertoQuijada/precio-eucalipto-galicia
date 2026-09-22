@@ -11,6 +11,8 @@ for (const [, rawSpecies, size, low, high] of rows) {
   parsed[rawSpecies.toLowerCase().replace("glóbulus", "globulus")].large = { low: Number(low), high: Number(high) };
 }
 const current = JSON.parse(await fs.readFile("data/prices.json", "utf8"));
+current.lastChecked = new Date().toISOString().slice(0, 10);
+current.updateStatus = "success";
 const isoDate = updated.match(/(\d{1,2}) de ([a-záéíóú]+) de (\d{4})/i);
 const months = { enero:"01", febrero:"02", marzo:"03", abril:"04", mayo:"05", junio:"06", julio:"07", agosto:"08", septiembre:"09", octubre:"10", noviembre:"11", diciembre:"12" };
 if (isoDate) current.lastUpdated = `${isoDate[3]}-${months[isoDate[2].toLowerCase()]}-${isoDate[1].padStart(2,"0")}`;

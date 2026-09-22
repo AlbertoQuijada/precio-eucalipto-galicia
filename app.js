@@ -1,4 +1,5 @@
 const state = { data: null };
+state.historyMonths = null;
 const species = { globulus: { name: "Eucalyptus globulus", short: "Globulus" }, nitens: { name: "Eucalyptus nitens", short: "Nitens" } };
 
 const money = value => `${value} €/t`;
@@ -17,13 +18,28 @@ function renderCards() {
   }).join("");
 }
 
+function renderFreshness() {
+  const updated = new Date(`${state.data.lastUpdated}T12:00:00`);
+  const today = new Date();
+  const age = Math.max(0, Math.floor((today - updated) / 86400000));
+  const freshness = document.querySelector("#freshness-label");
+  freshness.textContent = age === 0 ? "dato de hoy" : `dato de hace ${age} días`;
+  freshness.className = age > 30 ? "stale-data" : "";
+  document.querySelector("#update-check").textContent = `Última comprobación: ${dateLabel(state.data.lastChecked)} · ${state.data.updateStatus === "success" ? "correcta" : "requiere revisión"}`;
+}
+
 function renderChart() {
   const svg = document.querySelector("#history-chart");
-  const nitens = state.data.history.filter(item => item.species === "nitens");
-  const globulus = state.data.history.filter(item => item.species === "globulus");
-  const points = nitens;
-  const values = [...nitens, ...globulus].flatMap(point => [point.low, point.high]); const min = Math.min(...values) - 3; const max = Math.max(...values) + 3;
-  const x = index => 70 + index * ((700 - 70) / (points.length - 1)); const y = value => 205 - ((value - min) / (max - min)) * 155;
+  const cutoff = state.historyMonths === null ? null : new Date();
+  if (cutoff) cutoff.setMonth(cutoff.getMonth() - state.historyMonths);
+  const inRange = item => !cutoff || new Date(`${item.date}T12:00:00`) >= cutoff;
+  const nitens = state.data.history.filter(item => item.species === "nitens" && inRange(item));
+  const globulus = state.data.history.filter(item => item.species === "globulus" && inRange(item));
+  const nitensVisible = nitens.length ? nitens : state.data.history.filter(item => item.species === "nitens").slice(-1);
+  const globulusVisible = globulus.length ? globulus : state.data.history.filter(item => item.species === "globulus").slice(-1);
+  const points = nitensVisible;
+  const values = [...nitensVisible, ...globulusVisible].flatMap(point => [point.low, point.high]); const min = Math.min(...values) - 3; const max = Math.max(...values) + 3;
+  const x = index => 70 + index * ((700 - 70) / Math.max(points.length - 1, 1)); const y = value => 205 - ((value - min) / (max - min)) * 155;
   const labels = [28, 30, 32, 34, 36, 38, 40];
   const grid = labels.map(value => `<line class="grid-line" x1="55" x2="730" y1="${y(value)}" y2="${y(value)}"/><text class="chart-label" x="8" y="${y(value) + 4}">${value}</text>`).join("");
   const series = (items, cls, showValues) => {
@@ -33,8 +49,10 @@ function renderChart() {
     return `<polygon class="chart-area ${cls}" points="${area}"/><polyline class="chart-line ${cls}" points="${highPath}"/><polyline class="chart-line ${cls}" points="${lowPath}"/>${marks}`;
   };
   const dates = points.map(point => `<text class="chart-label" text-anchor="middle" x="${x(points.indexOf(point))}" y="235">${point.label}</text>`).join("");
-  svg.innerHTML = `${grid}${series(globulus, "globulus", false)}${series(nitens, "nitens", true)}${dates}`;
-  document.querySelector("#chart-description").textContent = "Nitens destacado · >35 cm · comparación con globulus";
+  svg.innerHTML = `${grid}${series(globulusVisible, "globulus", false)}${series(nitensVisible, "nitens", true)}${dates}`;
+  const visibleCount = Math.max(nitens.length, globulus.length);
+  const periodLabel = state.historyMonths === null ? "lecturas disponibles" : "referencias en este periodo";
+  document.querySelector("#chart-description").textContent = visibleCount < 2 ? `Nitens destacado · ${visibleCount} referencia disponible en este periodo` : `Nitens destacado · >35 cm · ${visibleCount} ${periodLabel}`;
 }
 
 function renderSources() {
@@ -68,6 +86,7 @@ async function init() {
   const response = await fetch("data/prices.json"); state.data = await response.json();
   document.querySelector("#updated-label").textContent = `Dato publicado el ${dateLabel(state.data.lastUpdated)}`;
   document.querySelector("#data-version").textContent = `Datos: ${dateLabel(state.data.lastUpdated)}`;
-  renderCards(); renderChart(); renderSources(); renderRecommendation();
+  renderCards(); renderFreshness(); renderChart(); renderSources(); renderRecommendation();
+  document.querySelector("#history-range").addEventListener("change", event => { state.historyMonths = event.target.value === "all" ? null : Number(event.target.value); renderChart(); });
 }
 init().catch(error => { document.querySelector("#updated-label").textContent = "No se han podido cargar los datos"; console.error(error); });
