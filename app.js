@@ -41,10 +41,28 @@ function renderSources() {
   document.querySelector("#source-list").innerHTML = state.data.sources.map(source => `<article class="source-item"><div class="source-type">${source.type}</div><h3 class="source-title"><a href="${source.url}" target="_blank" rel="noreferrer">${source.title} ↗</a></h3><p>${source.date}. ${source.description}</p></article>`).join("");
 }
 
+function renderRecommendation() {
+  const history = state.data.history.filter(item => item.species === "nitens").sort((a, b) => a.date.localeCompare(b.date));
+  const current = history.at(-1); const previous = history.at(-2);
+  const currentMid = (current.low + current.high) / 2; const previousMid = (previous.low + previous.high) / 2;
+  const change = ((currentMid - previousMid) / previousMid) * 100;
+  const badge = document.querySelector("#recommendation-badge"); const card = document.querySelector("#recommendation-card");
+  if (change < -1) {
+    badge.textContent = "Prudencia"; badge.className = "recommendation-badge caution";
+    card.innerHTML = `<div class="recommendation-lead"><strong>Si no tienes prisa, esperaría o pediría varias ofertas antes de cerrar.</strong><span>La señal disponible para nitens es ligeramente desfavorable.</span></div><div class="recommendation-grid"><div><span class="recommendation-label">Qué ha cambiado</span><p>La horquilla reciente es de <strong>${current.low}–${current.high} €/t</strong>, frente a ${previous.low}–${previous.high} €/t en la referencia anterior. El punto medio ha variado un ${Math.abs(change).toFixed(1).replace(".", ",")} % a la baja.</p></div><div><span class="recommendation-label">Qué haría</span><p>Solicitaría ofertas a varios compradores y negociaría el lote, pero evitaría vender con la primera oferta si no necesitas liquidez inmediata.</p></div></div>`;
+  } else if (change > 1) {
+    badge.textContent = "Señal favorable"; badge.className = "recommendation-badge positive";
+    card.innerHTML = `<div class="recommendation-lead"><strong>Es un momento razonable para pedir ofertas y valorar la venta.</strong><span>La referencia de nitens ha mejorado frente al dato anterior.</span></div><div class="recommendation-grid"><div><span class="recommendation-label">Qué ha cambiado</span><p>La horquilla reciente es de <strong>${current.low}–${current.high} €/t</strong> y el punto medio ha subido un ${change.toFixed(1).replace(".", ",")} %.</p></div><div><span class="recommendation-label">Qué haría</span><p>Compararía varias ofertas y comprobaría por escrito quién asume corta, saca, transporte, certificación e impuestos.</p></div></div>`;
+  } else {
+    badge.textContent = "Mercado estable"; badge.className = "recommendation-badge neutral";
+    card.innerHTML = `<div class="recommendation-lead"><strong>No hay una señal clara para esperar una subida inmediata.</strong><span>El mercado se mantiene estable en las referencias disponibles.</span></div><div class="recommendation-grid"><div><span class="recommendation-label">Qué significa</span><p>El rango reciente es de <strong>${current.low}–${current.high} €/t</strong> y apenas cambia frente a la referencia anterior.</p></div><div><span class="recommendation-label">Qué haría</span><p>Pediría varias ofertas y decidiría según la urgencia, el acceso al monte y la calidad del lote.</p></div></div>`;
+  }
+}
+
 async function init() {
   const response = await fetch("data/prices.json"); state.data = await response.json();
   document.querySelector("#updated-label").textContent = `Dato publicado el ${dateLabel(state.data.lastUpdated)}`;
   document.querySelector("#data-version").textContent = `Datos: ${dateLabel(state.data.lastUpdated)}`;
-  renderCards(); renderChart(); renderSources();
+  renderCards(); renderChart(); renderSources(); renderRecommendation();
 }
 init().catch(error => { document.querySelector("#updated-label").textContent = "No se han podido cargar los datos"; console.error(error); });
