@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Referencia pública del precio del eucalipto en pie en Galicia, en euros por tonelada." />
+    <title>Precio del eucalipto en Galicia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="header-link" href="#fuentes">Fuentes y método</a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <p class="eyebrow">Galicia · referencia de mercado</p>
+        <h1>Precio del eucalipto<br /><em>en pie</em></h1>
+        <p class="intro">Referencia pública del precio que recibe el propietario por el árbol sin talar en Galicia.</p>
+        <div class="status-line"><span class="status-dot"></span><span id="updated-label">Cargando datos…</span><span class="status-separator">·</span><span>€/tonelada · con corteza · sin IVA</span></div>
+      </section>
+
+      <div class="focus-line"><span class="focus-badge">Más de 35 cm</span><span>Diámetro de referencia en todas las cifras mostradas</span><span class="focus-note">La horquilla refleja diferencias de acceso, pendiente, volumen y condiciones de la parcela.</span></div>
+
+      <section class="price-grid" id="price-cards" aria-live="polite"></section>
+
+      <section class="callout">
+        <div class="callout-icon">i</div>
+        <div><strong>Es una referencia, no una oferta garantizada.</strong><br />El precio final de un monte concreto puede cambiar por su ubicación, volumen, calidad y quién asume corta, saca y transporte.</div>
+      </section>
+
+      <section class="history-section">
+        <div class="section-heading"><div><p class="eyebrow">Evolución disponible</p><h2>La tendencia con contexto</h2></div><span class="legend"><i class="legend-dot nitens-dot"></i>nitens <i class="legend-dot globulus-dot"></i>globulus</span></div>
+        <div class="chart-card">
+          <div class="chart-meta"><span>€/t</span><span id="chart-description">Datos comparables disponibles</span></div>
+          <div class="chart-wrap"><svg id="history-chart" viewBox="0 0 760 250" role="img" aria-label="Gráfico histórico del precio del eucalipto"></svg></div>
+          <div class="chart-footnote">Las fuentes no publican una serie mensual homogénea. Los puntos representan referencias públicas con distinta fecha y cobertura; no se interpolan meses sin dato.</div>
+        </div>
+      </section>
+
+      <section class="sources-section" id="fuentes">
+        <div class="section-heading"><div><p class="eyebrow">Transparencia</p><h2>De dónde sale el dato</h2></div></div>
+        <div class="source-list" id="source-list"></div>
+      </section>
+
+      <section class="method-section">
+        <h2>Qué significa “en pie”</h2>
+        <p>Es el precio de la madera tal como está en el monte, antes de talar. La empresa compradora suele asumir la corta, la saca y el transporte. Por eso no debe confundirse con el precio en cargadero ni con una tarifa industrial en fábrica.</p>
+        <p class="small-note">La aplicación no convierte €/m³ a €/t. Cuando una fuente publica otra unidad, se conserva como dato independiente y no entra en este indicador.</p>
+      </section>
+    </main>
+
+    <footer><div class="wrap footer-inner"><span>Monte claro · Precio del eucalipto en Galicia</span><span id="data-version"></span></div></footer>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

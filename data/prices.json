@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "region": "Galicia",
+  "unit": "€/t",
+  "condition": "en pie",
+  "lastUpdated": "2026-09-01",
+  "primarySourceId": "frouxeira-2026-09",
+  "prices": {
+    "globulus": { "large": {"low": 32, "high": 37} },
+    "nitens": { "large": {"low": 26, "high": 32} }
+  },
+  "trend": {"globulus": "stable", "nitens": "down"},
+  "history": [
+    {"date":"2023-12-31","label":"2023","species":"globulus","low":29,"high":31,"sourceId":"afg-2023"},
+    {"date":"2026-05-18","label":"may 2026","species":"globulus","low":31,"high":37,"sourceId":"galiciapress-2026-05"},
+    {"date":"2026-09-01","label":"sep 2026","species":"globulus","low":32,"high":37,"sourceId":"frouxeira-2026-09"},
+    {"date":"2023-12-31","label":"2023","species":"nitens","low":29,"high":31,"sourceId":"afg-2023"},
+    {"date":"2026-05-18","label":"may 2026","species":"nitens","low":27,"high":34,"sourceId":"galiciapress-2026-05"},
+    {"date":"2026-09-01","label":"sep 2026","species":"nitens","low":26,"high":32,"sourceId":"frouxeira-2026-09"}
+  ],
+  "sources": [
+    {"id":"frouxeira-2026-09","type":"Referencia actual","title":"Maderera Frouxeira · Precio de la madera de eucalipto","date":"1 septiembre 2026","url":"https://madererafrouxeira.com/compramos-madera-precio-del-eucalipto/","description":"Horquillas en pie de contratos cerrados en los dos últimos meses, para A Coruña y Lugo; separa especie y diámetro."},
+    {"id":"galiciapress-2026-05","type":"Referencia sectorial","title":"GaliciaPress · Comparativa de precios en pie","date":"18 mayo 2026","url":"https://www.galiciapress.es/articulo/economia/2026-05-18/5884401-invasion-eucalipto-nitens-especie-rapido-instalado-montes-gallegos","description":"Referencia editorial con rangos orientativos en monte por especie y diámetro."},
+    {"id":"afg-2023","type":"Fuente sectorial","title":"Asociación Forestal de Galicia · Precios de la madera","date":"2023","url":"https://asociacionforestal.gal/es/os-propietarios-forestais-galegos-facturaron-276-millons-de-euros-pola-venda-de-madeira-en-2023/","description":"Precio medio del eucalipto en pie, sin IVA y con corteza; no separa globulus y nitens."},
+    {"id":"xunta-observatorio","type":"Fuente institucional","title":"Xunta de Galicia · Observatorio forestal","date":"actualización continua","url":"https://ovmediorural.xunta.gal/gl/consultas-publicas/observatorio-forestal","description":"Aporta series de aprovechamientos y subastas; no publica una cotización de eucalipto en €/t y por eso no se usa como precio principal."}
+  ]
+}
